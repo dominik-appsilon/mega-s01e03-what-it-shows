@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="../../_app/immutable/assets/runbook.9BJ9BomY.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/Callout.89E4ZsOX.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/5.COLDjLCV.css" rel="stylesheet">
+		<link rel="modulepreload" href="../../_app/immutable/entry/start.BgwtJ3Oq.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/y_sU7d-f.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/WLr3OCk2.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/CaskBBMd.js">
+		<link rel="modulepreload" href="../../_app/immutable/entry/app.C_vQT6EE.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/CxLjh0hF.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/BxHaDExg.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/BviaqjHR.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/0.BUja-rEn.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/BAC74Pmu.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/5.DPpTfNc7.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/BeCGd7JV.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/CSay-iu-.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/BWUPc4Cf.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/n6qSe5Gz.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/iXLSwIXB.js"><!--[--><!--]--><title>#4471 split: one ticket per problem · support kb</title></head>
+<body><div style="display: contents"><!--[--><!--[--><!----><!----><div class="kb svelte-60g32v"><header><a class="crumb svelte-60g32v" href="/kb">support desk · kb</a> <h1 class="svelte-60g32v">#4471 split: one ticket per problem</h1> <p class="meta svelte-60g32v"><span>owner <b>Dominik Rafacz</b></span> <span class="status open svelte-60g32v">open</span> <span class="svelte-60g32v">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[!--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked known: one issue, one fix queued. It is not one issue. The
+desk merged its reports by subject line (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>),
+and “wrong date” subjects hide different bugs. The queued parser fix closes only one of them.</p> <aside class="warn svelte-hdh0t2"><!---->One ticket per problem. The queued parser fix does not fix the others.<!----></aside><!----> <h2>The split</h2> <p class="sum svelte-1nnkwcm"><strong>427</strong> rows in the export · <strong>412</strong> unique reports merged into #4471 · <strong>3</strong> problems</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td>Shared parser reads dates month first for day-first tenants <code>parser</code></td><td>374</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><!--[!--><a href="https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/1">#1</a><!--]--></td></tr><tr><td>booking-v3 form hint says MM/DD/YYYY for day-first tenants <code>hint</code></td><td>33</td><td>3</td><td>2026-04-17 → 2026-09-22</td><td><!--[!--><a href="https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/2">#2</a><!--]--></td></tr><tr><td>Booking moves by one day (time zone) <code>shift</code></td><td>5</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><!--[!--><a href="https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/3">#3</a><!--]--></td></tr><!--]--></tbody></table><!----> <p>Counted by tenant and channel with <code>causeOf()</code> in <code>src/lib/kb/causes.ts</code>, not by the tag intake
+gave a report: that tag comes from the reporter’s browser, and the cause depends on the tenant. The
+export repeats some reports across pages, so each id counts once.</p> <h2>The problems</h2> <ul><li><strong>parser</strong> (<a href="https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/1" rel="nofollow">ticket #1</a>):
+the shared parser reads every date month first, and every tenant writes the day first. Day and
+month swap.</li> <li><strong>hint</strong> (<a href="https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/2" rel="nofollow">ticket #2</a>):
+the booking-v3 form prints <code>MM/DD/YYYY</code> under its date field. People type month first, as told,
+and the form reads it the tenant’s way. Same symptom, different bug: the parser fix does not
+touch it. The #4471 table lists it as “no ticket of its own”; this is its ticket.</li> <li><strong>shift</strong> (<a href="https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/3" rel="nofollow">ticket #3</a>):
+the reports the desk already marked as one-day moves (<code>desk-notes.json</code>). The date moves by one
+day, or differs between time zones. That is not a swap, and the parser fix does not touch it.</li></ul> <h2>For the desk</h2> <ul><li>Keep #4471 open until every ticket above is fixed, or close it as split into those tickets.</li> <li>Matching on subject alone merged these. A new decision record should replace 0001 rather than
+edit it.</li></ul> <!--[--><p class="stamp svelte-5qojh0">desk ref <b class="svelte-5qojh0">DR-GVMN-QXNJ</b></p><!--]--><!----><!----></main> <footer class="svelte-60g32v">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!----><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_gy9ta7 = {
+						base: new URL("../..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../../_app/immutable/entry/start.BgwtJ3Oq.js"),
+						import("../../_app/immutable/entry/app.C_vQT6EE.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div></body></html>
