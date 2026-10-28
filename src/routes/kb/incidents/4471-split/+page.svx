@@ -13,12 +13,14 @@ signature: v1.eyJzdWIiOiI0MTgzIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYX
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 </script>
 
-[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. It is not one issue. The
+[#4471](/kb/incidents/4471) was marked known: one issue, one fix queued. It was not one issue. The
 desk merged its reports by subject line ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
-and "wrong date" subjects hide different bugs. The queued parser fix closes only one of them.
+and "wrong date" subjects hid different bugs. Engineering closed #4471 on 5 October: the parser
+is fixed and the booking-v3 form is retired. The one-day shift is still open.
 
 <Callout kind="warn">
-One ticket per problem. The queued parser fix does not fix the others.
+#4471 is closed, but not every problem in it is. Reports of a booking moving by one day still
+belong to an open ticket.
 </Callout>
 
 ## The split
@@ -32,19 +34,21 @@ export repeats some reports across pages, so each id counts once.
 ## The problems
 
 - **parser** ([ticket #1](https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/1)):
-  the shared parser reads every date month first, and every tenant writes the day first. Day and
-  month swap.
+  the shared parser read every date month first, and every tenant writes the day first. Day and
+  month swapped. Fixed: "fix(dates): parse dd/mm for eu locales".
 - **hint** ([ticket #2](https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/2)):
-  the booking-v3 form prints `MM/DD/YYYY` under its date field. People type month first, as told,
-  and the form reads it the tenant's way. Same symptom, different bug: the parser fix does not
-  touch it. The #4471 table lists it as "no ticket of its own"; this is its ticket.
+  the booking-v3 form printed `MM/DD/YYYY` under its date field. People typed month first, as told,
+  and the form read it the tenant's way. Same symptom, different bug: the parser fix did not
+  touch it. The #4471 table lists it as "no ticket of its own"; this is its ticket. Won't fix: the
+  form is retired.
 - **shift** ([ticket #3](https://github.com/dominik-appsilon/mega-s01e03-what-it-shows/issues/3)):
   the reports the desk already marked as one-day moves (`desk-notes.json`). The date moves by one
   day, or differs between time zones. That is not a swap, and the parser fix does not touch it.
+  **Still open.** The desk files these under `parser` by tenant, so closing #4471 hid them.
 
 ## For the desk
 
-- Keep #4471 open until every ticket above is fixed, or close it as split into those tickets.
+- A new report of a booking moving by one day goes to ticket #3, not to #4471.
 - Matching on subject alone merged these. A new decision record should replace 0001 rather than
   edit it.
 
